@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome - Chocolates with Rangani's</title>
+    <link rel="stylesheet" href="style.css">
+    
+    <style>
+        #logo-img {
+            max-width: 150px; /* Ensures the logo fits well within the container */
+            height: auto;
+            display: block;
+            margin: 0 auto 1.5rem auto; /* Centers the image and adds space below */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        
+<img id="logo-img" src="logo.png" alt="Chocolates with Rangani's Logo by Jinay Rangani">
+       <div id="signInForm" class="form-container">
+            <h1>Chocolates with Rangani's</h1>
+            <h2>Sign In</h2>
+            <input type="email" placeholder="Email" class="input-field">
+            <input type="password" placeholder="Password" class="input-field">
+            <button class="btn">Sign In</button>
+            <p>
+                <a href="#" id="showSignUp">Don't have an account? Sign up</a>
+            </p>
+        </div>
+
+        <div id="signUpForm" class="form-container" style="display: none;">
+            <h1>Chocolates with Rangani's</h1>
+            <h2>Sign Up</h2>
+            <input type="text" id="signUpName" placeholder="Name" class="input-field">
+            <input type="email" id="signUpEmail" placeholder="Email" class="input-field">
+            <input type="password" id="signUpPassword" placeholder="Password" class="input-field">
+            <button id="signUpButton" class="btn">Sign Up</button>
+            <p>
+                <a href="#" id="showSignIn">Already have an account? Sign in</a>
+            </p>
+        </div>
+    </div>
+    
+    <script src="app.js"></script>
+</body>
+</html>

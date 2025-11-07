@@ -1,0 +1,73 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Membership - Chocolates with Rangani's</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Do you want to buy our membership?</h1>
+        <p>Get exclusive discounts and free delivery on all orders for a year!</p>
+        
+        <div id="membershipForm">
+            
+            <label for="member-name" style="display: block; text-align: left; margin-top: 10px;">Name:</label>
+            <input type="text" id="member-name" class="input-field" placeholder="Full Name" required>
+
+            <label for="member-sign" style="display: block; text-align: left; margin-top: 5px;">Signature:</label>
+            <input type="text" id="member-sign" class="input-field" placeholder="Type your initials/signature" required>
+            
+            <h3 style="text-align: left; margin-top: 15px; margin-bottom: 5px;">Terms and Conditions Applied*</h3>
+            <div class="terms-box">
+                <p>
+                    **Terms and Conditions:-** By placing an order with Chocolates with Rangani's, customers hereby acknowledge and agree to the following terms and conditions: All products are carefully handcrafted and may reasonably exhibit slight variations in appearance, shape, or size. While every effort is made to provide accurate ingredient information, it remains the sole responsibility of the customer to verify allergens prior to consumption, and customers are advised that products may contain or come into contact with nuts, dairy, gluten, and soy. All orders must be paid for in full at the time of purchase, and once confirmed, shall not be subject to cancellation or modification. Delivery timelines are indicative only and shall not constitute a binding obligation; Chocolates with Rangani's shall not be held liable for delays or non-delivery resulting from courier services, force majeure events, or circumstances beyond its reasonable control. Given the perishable nature of the products, returns shall not be accepted; however, in cases where products are received in a damaged condition, the customer may seek a refund or replacement, subject to the submission of satisfactory proof within twenty-four (24) hours of delivery. Chocolates with Rangani's expressly disclaims liability for any allergic reactions, health concerns, or adverse effects arising from the consumption or misuse of its products. All intellectual property, including but not limited to trade names, logos, packaging, product designs, and written materials, is the exclusive property of Chocolates with Rangani's and may not be reproduced, distributed, or otherwise used without prior written authorization. The liability of Chocolates with Rangani's in any circumstance shall be strictly limited to the value of the product purchased. These terms and conditions shall be governed by and construed in accordance with the laws of Maharashtra, India, and any disputes arising hereunder shall fall within the exclusive jurisdiction of the competent courts at Mumbai.
+                </p>
+            </div>
+            
+            <label style="display: block; text-align: left; margin-top: 15px;">
+                <input type="checkbox" id="accept-terms" required> I agree to the Terms and Conditions
+            </label>
+
+            <button class="btn" onclick="saveMembership(true)" style="margin-top: 20px;">
+                Buy Membership
+            </button>
+        </div>
+        
+        <button class="btn btn-secondary" onclick="saveMembership(false)">
+            No Thanks
+        </button>
+    </div>
+
+    <script>
+        function saveMembership(didBuy) {
+            let order = JSON.parse(localStorage.getItem("order")) || { items: [] };
+
+            if (didBuy) {
+                const name = document.getElementById("member-name").value;
+                const sign = document.getElementById("member-sign").value;
+                const termsChecked = document.getElementById("accept-terms").checked;
+
+                // Validation check for membership purchase
+                if (!name || !sign || !termsChecked) {
+                    alert("Please fill in your Name and Signature and accept the Terms and Conditions to buy the membership.");
+                    return; // Stop function if validation fails
+                }
+                
+                // Store membership and form data
+                order.membership = true;
+                order.memberName = name;
+                order.memberSign = sign;
+            } else {
+                // Store membership decline and clear form data
+                order.membership = false;
+                order.memberName = 'Declined';
+                order.memberSign = 'Declined';
+            }
+            
+            localStorage.setItem("order", JSON.stringify(order));
+            window.location.href = 'confirmation.html'; // Proceed to the confirmation page
+        }
+    </script>
+</body>
+</html>

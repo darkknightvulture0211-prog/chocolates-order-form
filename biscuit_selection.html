@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select Biscuits - Chocolates with Rangani's</title>
+    <link rel="stylesheet" href="style.css">
+    
+    <style>
+        .back-link {
+            display: inline-block;
+            margin-top: 1rem;
+            color: #555;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+        .back-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Choose Your Biscuits</h1>
+        
+        <div class="item-list">
+            <label><input type="checkbox" id="item-oreo"> Oreo (₹10)</label>
+            <label><input type="checkbox" id="item-goodday"> Good Day (₹10)</label>
+            <label><input type="checkbox" id="item-mariegold"> Marie Gold (₹10)</label>
+        </div>
+
+        <button class="btn" onclick="saveBiscuits(true)">Add to Order</button>
+        <button class="btn btn-secondary" onclick="saveBiscuits(false)">
+            No Thanks
+        </button>
+
+        <hr style="border:0; border-top: 1px solid #eee; margin: 1.5rem 0;">
+
+        <a href="chocolates.html" class="back-link">&laquo; Go Back to Chocolates</a>
+        
+    </div>
+
+    <script>
+        // Pre-fill selections on page load
+        document.addEventListener("DOMContentLoaded", () => {
+            let order = JSON.parse(localStorage.getItem("order"));
+            if (order && order.items) {
+                // This checks for the old price too, just in case
+                if (order.items.includes("Oreo (₹10)") || order.items.includes("Oreo (₹20)")) { 
+                    document.getElementById("item-oreo").checked = true;
+                }
+                if (order.items.includes("Good Day (₹10)")) { document.getElementById("item-goodday").checked = true; }
+                if (order.items.includes("Marie Gold (₹10)")) { document.getElementById("item-mariegold").checked = true; }
+            }
+        });
+
+        // This function now handles "Add" AND "No Thanks"
+        function saveBiscuits(didBuy) {
+            let order = JSON.parse(localStorage.getItem("order")) || { items: [] };
+
+            // ALWAYS remove previous biscuit selections first
+            let nonBiscuitItems = order.items.filter(item => 
+                !item.startsWith("Oreo") && 
+                !item.startsWith("Good Day") && 
+                !item.startsWith("Marie Gold")
+            );
+
+            // ONLY add biscuits if the user clicked "Add to Order"
+            if (didBuy) {
+                if (document.getElementById("item-oreo").checked) { 
+                    nonBiscuitItems.push("Oreo (₹10)"); 
+                }
+                if (document.getElementById("item-goodday").checked) { nonBiscuitItems.push("Good Day (₹10)"); }
+                if (document.getElementById("item-mariegold").checked) { nonBiscuitItems.push("Marie Gold (₹10)"); }
+            }
+            
+            order.items = nonBiscuitItems;
+            localStorage.setItem("order", JSON.stringify(order));
+
+            // Proceed to the next page
+            window.location.href = 'membership.html';
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-M">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select Chocolates - Chocolates with Rangani's</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>What would you like to order?</h1>
+
+        <h2>Chocolates (₹10)</h2>
+        <div class="item-list">
+            <label><input type="checkbox" id="item-kitkat"> Kit-Kat (₹10)</label>
+            <label><input type="checkbox" id="item-5star"> 5-Star (₹10)</label>
+            <label><input type="checkbox" id="item-dairymilk"> Dairy Milk (₹10)</label>
+        </div>
+
+        <h2>Quick Bites (₹5)</h2>
+        <div class="item-list">
+            <label><input type="checkbox" id="item-pulse"> Pulse (₹5)</label>
+            <label><input type="checkbox" id="item-kacchaaam"> Kaccha Aam (₹5)</label>
+            
+            <label><input type="checkbox" id="item-milkybar-5"> Milky Bar (₹5)</label>
+            <label><input type="checkbox" id="item-milkybar-10"> Milky Bar (₹10)</label>
+        </div>
+
+        <button class="btn" onclick="saveChocolates()">Continue</button>
+    </div>
+
+    <script>
+        // Pre-fill selections if user comes back
+        document.addEventListener("DOMContentLoaded", () => {
+            let order = JSON.parse(localStorage.getItem("order"));
+            if (order && order.items) {
+                if (order.items.includes("Kit-Kat (₹10)")) { document.getElementById("item-kitkat").checked = true; }
+                if (order.items.includes("5-Star (₹10)")) { document.getElementById("item-5star").checked = true; }
+                if (order.items.includes("Dairy Milk (₹10)")) { document.getElementById("item-dairymilk").checked = true; }
+                if (order.items.includes("Pulse (₹5)")) { document.getElementById("item-pulse").checked = true; }
+                if (order.items.includes("Kaccha Aam (₹5)")) { document.getElementById("item-kacchaaam").checked = true; }
+                
+                // ** UPDATED TO CHECK BOTH MILKY BARS **
+                if (order.items.includes("Milky Bar (₹5)")) { document.getElementById("item-milkybar-5").checked = true; }
+                if (order.items.includes("Milky Bar (₹10)")) { document.getElementById("item-milkybar-10").checked = true; }
+            }
+        });
+
+        function saveChocolates() {
+            let orderItems = [];
+            if (document.getElementById("item-kitkat").checked) { orderItems.push("Kit-Kat (₹10)"); }
+            if (document.getElementById("item-5star").checked) { orderItems.push("5-Star (₹10)"); }
+            if (document.getElementById("item-dairymilk").checked) { orderItems.push("Dairy Milk (₹10)"); }
+            if (document.getElementById("item-pulse").checked) { orderItems.push("Pulse (₹5)"); }
+            if (document.getElementById("item-kacchaaam").checked) { orderItems.push("Kaccha Aam (₹5)"); }
+
+            // ** UPDATED TO SAVE BOTH MILKY BARS **
+            if (document.getElementById("item-milkybar-5").checked) { orderItems.push("Milky Bar (₹5)"); }
+            if (document.getElementById("item-milkybar-10").checked) { orderItems.push("Milky Bar (₹10)"); }
+
+            let order = JSON.parse(localStorage.getItem("order")) || {};
+            order.items = orderItems;
+            
+            localStorage.setItem("order", JSON.stringify(order));
+            
+            // This links to your 'biscuit_selection.html' file
+            window.location.href = 'biscuit_selection.html'; 
+        }
+    </script>
+</body>
+</html>

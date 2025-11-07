@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Complete - Chocolates with Rangani's</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Thank You for choosing Chocolates with Rangani's</h1>
+        <p>Your order has been placed successfully!</p>
+        
+        <button class="btn" onclick="startNew()">Start a New Order</button>
+    </div>
+
+    <script>
+        // Clear the order from storage for a fresh start
+        localStorage.removeItem("order");
+
+        function startNew() {
+            window.location.href = 'index.html';
+        }
+    </script>
+</body>
+</html>
