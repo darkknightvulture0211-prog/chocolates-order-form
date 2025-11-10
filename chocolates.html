@@ -8,6 +8,9 @@
 </head>
 <body>
     <div class="container">
+        <div id="offerBanner" class="offer-banner">
+            </div>
+        
         <h1>What would you like to order?</h1>
 
         <h2>Chocolates (₹10)</h2>
@@ -30,8 +33,22 @@
     </div>
 
     <script>
-        // Pre-fill selections if user comes back
+        // *** FUNCTION TO CHANGE THE OFFER ***
+        function loadOffer() {
+            const offerElement = document.getElementById('offerBanner');
+            
+            // =======================================================
+            // *** CHANGE THIS LINE TO UPDATE THE OFFER ANY TIME ***
+            // =======================================================
+            const currentOffer = "🎉 Today's Special: Get any 4 Chocolates for just ₹25! 🎉";
+            
+            offerElement.textContent = currentOffer;
+        }
+
         document.addEventListener("DOMContentLoaded", () => {
+            loadOffer(); // Load the offer when the page opens
+
+            // Existing code to load previous selections
             let order = JSON.parse(localStorage.getItem("order"));
             if (order && order.items) {
                 if (order.items.includes("Kit-Kat (₹10)")) { document.getElementById("item-kitkat").checked = true; }
@@ -40,7 +57,6 @@
                 if (order.items.includes("Pulse (₹5)")) { document.getElementById("item-pulse").checked = true; }
                 if (order.items.includes("Kaccha Aam (₹5)")) { document.getElementById("item-kacchaaam").checked = true; }
                 
-                // ** UPDATED TO CHECK BOTH MILKY BARS **
                 if (order.items.includes("Milky Bar (₹5)")) { document.getElementById("item-milkybar-5").checked = true; }
                 if (order.items.includes("Milky Bar (₹10)")) { document.getElementById("item-milkybar-10").checked = true; }
             }
@@ -53,8 +69,6 @@
             if (document.getElementById("item-dairymilk").checked) { orderItems.push("Dairy Milk (₹10)"); }
             if (document.getElementById("item-pulse").checked) { orderItems.push("Pulse (₹5)"); }
             if (document.getElementById("item-kacchaaam").checked) { orderItems.push("Kaccha Aam (₹5)"); }
-
-            // ** UPDATED TO SAVE BOTH MILKY BARS **
             if (document.getElementById("item-milkybar-5").checked) { orderItems.push("Milky Bar (₹5)"); }
             if (document.getElementById("item-milkybar-10").checked) { orderItems.push("Milky Bar (₹10)"); }
 
@@ -63,7 +77,7 @@
             
             localStorage.setItem("order", JSON.stringify(order));
             
-            // This links to your 'biscuit_selection.html' file
+            // Proceed to biscuits
             window.location.href = 'biscuit_selection.html'; 
         }
     </script>
