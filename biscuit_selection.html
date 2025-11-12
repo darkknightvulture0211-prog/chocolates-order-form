@@ -17,22 +17,36 @@
         .back-link:hover {
             text-decoration: underline;
         }
+        .button-group {
+            display: flex;
+            gap: 10px; 
+            margin-top: 15px;
+        }
+        .button-group .btn {
+            flex-grow: 1;
+        }
     </style>
 </head>
 <body>
     <div class="container">
+        <div id="offerBanner" class="offer-banner">
+            </div>
+        
         <h1>Choose Your Biscuits</h1>
         
         <div class="item-list">
             <label><input type="checkbox" id="item-oreo"> Oreo (₹10)</label>
             <label><input type="checkbox" id="item-goodday"> Good Day (₹10)</label>
             <label><input type="checkbox" id="item-mariegold"> Marie Gold (₹10)</label>
+            <label><input type="checkbox" id="item-jimjam"> Jim Jam (₹10)</label>
         </div>
 
-        <button class="btn" onclick="saveBiscuits(true)">Add to Order</button>
-        <button class="btn btn-secondary" onclick="saveBiscuits(false)">
-            No Thanks
-        </button>
+        <div class="button-group">
+            <button class="btn" onclick="saveBiscuits(true)">Add to Order</button>
+            <button class="btn btn-secondary" onclick="saveBiscuits(false)">
+                No Thanks
+            </button>
+        </div>
 
         <hr style="border:0; border-top: 1px solid #eee; margin: 1.5rem 0;">
 
@@ -41,43 +55,57 @@
     </div>
 
     <script>
-        // Pre-fill selections on page load
+        // *** FUNCTION TO CHANGE THE OFFER ***
+        function loadOffer() {
+            const offerElement = document.getElementById('offerBanner');
+            
+            // =======================================================
+            // *** CHANGE THIS LINE TO UPDATE THE OFFER ANY TIME ***
+            // =======================================================
+            const currentOffer = "🍪 Biscuit Bonanza: Buy any two biscuits at ₹10! 🥳";
+            
+            offerElement.textContent = currentOffer;
+        }
+
         document.addEventListener("DOMContentLoaded", () => {
+            loadOffer(); // Load the offer when the page opens
+            
             let order = JSON.parse(localStorage.getItem("order"));
             if (order && order.items) {
-                // This checks for the old price too, just in case
                 if (order.items.includes("Oreo (₹10)") || order.items.includes("Oreo (₹20)")) { 
                     document.getElementById("item-oreo").checked = true;
                 }
                 if (order.items.includes("Good Day (₹10)")) { document.getElementById("item-goodday").checked = true; }
                 if (order.items.includes("Marie Gold (₹10)")) { document.getElementById("item-mariegold").checked = true; }
+                if (order.items.includes("Jim Jam (₹10)")) { document.getElementById("item-jimjam").checked = true; }
             }
         });
 
-        // This function now handles "Add" AND "No Thanks"
         function saveBiscuits(didBuy) {
             let order = JSON.parse(localStorage.getItem("order")) || { items: [] };
 
-            // ALWAYS remove previous biscuit selections first
+            // Remove previous biscuit selections first
             let nonBiscuitItems = order.items.filter(item => 
                 !item.startsWith("Oreo") && 
                 !item.startsWith("Good Day") && 
-                !item.startsWith("Marie Gold")
+                !item.startsWith("Marie Gold") &&
+                !item.startsWith("Jim Jam")
             );
 
-            // ONLY add biscuits if the user clicked "Add to Order"
+            // Add biscuits only if the user clicked "Add to Order"
             if (didBuy) {
                 if (document.getElementById("item-oreo").checked) { 
                     nonBiscuitItems.push("Oreo (₹10)"); 
                 }
                 if (document.getElementById("item-goodday").checked) { nonBiscuitItems.push("Good Day (₹10)"); }
                 if (document.getElementById("item-mariegold").checked) { nonBiscuitItems.push("Marie Gold (₹10)"); }
+                if (document.getElementById("item-jimjam").checked) { nonBiscuitItems.push("Jim Jam (₹10)"); }
             }
             
             order.items = nonBiscuitItems;
             localStorage.setItem("order", JSON.stringify(order));
 
-            // Proceed to the next page
+            // Proceed to membership
             window.location.href = 'membership.html';
         }
     </script>
